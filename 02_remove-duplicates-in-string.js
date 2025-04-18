@@ -36,7 +36,7 @@ const isCharsSame = (string) => {
     return true;
 };
 
-const removeDuplicatesInString = (string, k) => {
+const removeDuplicatesInStringV1 = (string, k) => {
     let copy = string;
     let i = 0;
     while (i < copy.length) {
@@ -56,7 +56,26 @@ const removeDuplicatesInString = (string, k) => {
     return copy;
 };
 
-console.log(removeDuplicatesInString("pbbcggttciiippooaais", 2));
-console.log(removeDuplicatesInString("deeedbbcccbdaa", 3));
-console.log(removeDuplicatesInString("aaabbbacd", 3));
-console.log(removeDuplicatesInString("aabbbacd", 2));
+/* Time Complexity: O(N); Space Comlexity: O(N) */
+
+const removeDuplicatesInStringV2 = (string, k) => {
+    const stack = []; // [{char: string, count: number}]
+
+    for (const char of string) {
+        const lastIn = stack[stack.length - 1];
+        if (lastIn && lastIn.char === char) {
+            lastIn.count++;
+            if (lastIn.count === k) {
+                stack.pop();
+            }
+        } else {
+            stack.push({ char, count: 1 });
+        }
+    }
+
+    return stack.map(({ char, count }) => char.repeat(count)).join("");
+};
+console.log(removeDuplicatesInStringV2("pbbcggttciiippooaais", 2));
+console.log(removeDuplicatesInStringV2("deeedbbcccbdaa", 3));
+console.log(removeDuplicatesInStringV2("aaabbbacd", 3));
+console.log(removeDuplicatesInStringV2("aabbbacd", 2));

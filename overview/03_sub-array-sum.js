@@ -27,6 +27,10 @@ const hasGoodSubarray = (nums, target) => {
         prefixSum += nums[i];
 
         let remainder = prefixSum % target;
+
+        /* This important as JavaScript's % operator returns a remainder with the same sign as the dividend. 
+  For modular arithmetic, we need a non-negative remainder in the range [0, target-1].
+  Adding target to negative remainders ensures we get the correct mathematical modulo result. */
         if (remainder < 0) remainder += target;
 
         if (seen.has(remainder)) {
@@ -47,3 +51,4 @@ console.log(hasGoodSubarray([-1, 6, 1], 5)); // true
 console.log(hasGoodSubarray([0], 1)); // false
 console.log(hasGoodSubarray([1, 2, 3, 4, 5], 12)); // true
 console.log(hasGoodSubarray([6], 6)); // false
+console.log(hasGoodSubarray([3, -8, 2, 1, 6], 7)); // true
